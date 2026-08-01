@@ -18,7 +18,7 @@ RowLayout
     property color color: !details ? "white" : Style.getCoinColor(details.ticker)
     property alias middle_text: middle_line.text_value
     property alias bottom_text: bottom_line.text_value
-    property int activation_pct: General.zhtlcActivationProgress(API.app.get_zhtlc_status(details.ticker), details.ticker)
+    property int activation_pct: General.zhtlcActivationProgress(API.app.get_task_activation_status(details.ticker), details.ticker)
 
     Behavior on color { ColorAnimation { duration: Style.animationDuration } }
 
@@ -26,7 +26,7 @@ RowLayout
     {
         target: API.app.settings_pg
         function onZhtlcStatusChanged() {
-            activation_pct = General.zhtlcActivationProgress(API.app.get_zhtlc_status(details.ticker), details.ticker)
+            activation_pct = General.zhtlcActivationProgress(API.app.get_task_activation_status(details.ticker), details.ticker)
         }
     }
 

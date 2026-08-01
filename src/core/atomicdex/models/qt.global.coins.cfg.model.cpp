@@ -47,6 +47,7 @@ namespace
             {"is_testnet", coin.is_testnet.value_or(false)},
             {"is_erc_family", coin.is_erc_family},
             {"is_zhtlc_family", coin.is_zhtlc_family},
+            {"is_sia_family", coin.is_sia_family},
             {"is_wallet_only", coin.wallet_only},
             {"checkpoint_height", coin.checkpoint_height},
             {"checkpoint_blocktime", coin.checkpoint_blocktime},
@@ -323,6 +324,12 @@ namespace atomic_dex
     global_coins_cfg_model::get_all_utxo_proxy() const 
     {
         return m_proxies[CoinType::UTXO];
+    }
+
+    global_coins_cfg_proxy_model*
+    global_coins_cfg_model::get_all_sia_proxy() const
+    {
+        return m_proxies[CoinType::SIA];
     }
 
     global_coins_cfg_proxy_model*

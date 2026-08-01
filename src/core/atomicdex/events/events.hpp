@@ -51,7 +51,7 @@ namespace atomic_dex
         bool after_manual_reset{false};
     };
 
-    struct enabling_z_coin_status
+    struct enabling_task_status
     {
         std::string coin;
         std::string reason;

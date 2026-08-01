@@ -34,7 +34,7 @@ namespace atomic_dex
         std::string		gui{std::string(DEX_NAME) + " "s + atomic_dex::get_version()};
         int64_t			netid{8762};
         int64_t			rpcport{atomic_dex::g_dex_rpcport};
-        std::vector<std::string> seednodes{"seed02.kmdefi.net", "seed04.kmdefi.net", "sintara.dragon-seed.com", "160.191.224.187", "209.145.50.223"};
+        std::vector<std::string> seednodes{"seed02.kmdefi.net", "seed04.kmdefi.net", "mm2seed.shorelinecrypto.com", "seed01.netid8762.fans", "seed02.netid8762.fans"};
 #ifdef _WIN32
         std::string		userhome{utils::u8string(std::filesystem::path(_wgetenv(L"HOMEPATH")))};
 #else

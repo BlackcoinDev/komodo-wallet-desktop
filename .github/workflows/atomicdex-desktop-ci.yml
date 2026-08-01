@@ -66,7 +66,7 @@ jobs:
             host: 'windows'
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           submodules: 'true'
@@ -104,7 +104,9 @@ jobs:
 
       - name: Install MSVC
         if: runner.os == 'Windows'
-        uses: ilammy/msvc-dev-cmd@v1
+        uses: TheMrMilchmann/setup-msvc-dev@v4
+        with:
+          arch: x64
 
       - name: Build libwally (Windows)
         if: runner.os == 'Windows'
@@ -154,14 +156,14 @@ jobs:
       - name: Restore scoop cache (Windows)
         if: runner.os == 'Windows'
         id: restore_cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: '~/scoop'
           key: cache_version_${{ env.cache_version }}-${{ hashFiles(env.cache_hash_seed_file_path) }}
 
       - name: Install scoop (Windows)
         if: ${{ (runner.os == 'Windows') && (steps.restore_cache.outputs.cache-hit != 'true') }}
-        uses: MinoruSekine/setup-scoop@v4.0.2
+        uses: MinoruSekine/setup-scoop@v5
         with:
           install_scoop: 'true'
           buckets: extras
@@ -171,7 +173,7 @@ jobs:
 
       - name: Setup scoop PATH (Windows)
         if: ${{ (runner.os == 'Windows') && (steps.restore_cache.outputs.cache-hit == 'true') }}
-        uses: MinoruSekine/setup-scoop@v4.0.2
+        uses: MinoruSekine/setup-scoop@v5
         with:
           install_scoop: 'false'
           scoop_update: 'false'
@@ -195,7 +197,7 @@ jobs:
         with:
           version: '${{ matrix.type }}-1.1'
           execute_install_scripts: true
-          packages: autoconf autoconf-archive automake bison build-essential curl gperf libcap-dev libpulse-dev libtool libssl-dev libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb1-dev libxcb-keysyms1-dev libxcb-render-util0-dev libxcb-xinerama0 libfuse2 libxcursor-dev libxcomposite-dev libxdamage-dev libxrandr-dev libxtst-dev libxss-dev libdbus-1-dev libevent-dev libfontconfig1-dev libgl1-mesa-dev libudev-dev libpci-dev libnss3-dev libasound2-dev libegl1-mesa-dev linux-libc-dev lsb-release ninja-build nodejs software-properties-common unzip wget zstd qtbase5-dev qtdeclarative5-dev qtquickcontrols2-5-dev qttools5-dev qtwebengine5-dev libqt5svg5-dev libqt5charts5-dev libqt5waylandclient5-dev qml-module-qtquick-controls qml-module-qtquick-controls2 qml-module-qtquick-dialogs qml-module-qtquick-extras qml-module-qtquick-layouts qml-module-qtquick-shapes qml-module-qtcharts qml-module-qtgraphicaleffects qml-module-qtwebengine qml-module-qt-labs-platform qml-module-qt-labs-settings
+          packages: autoconf autoconf-archive automake bison build-essential curl gperf libcap-dev libpulse-dev libtool libssl-dev libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb1-dev libxcb-keysyms1-dev libxcb-render-util0-dev libxcb-xinerama0 libfuse2 libxcursor-dev libxcomposite-dev libxdamage-dev libxrandr-dev libxtst-dev libxss-dev libdbus-1-dev libevent-dev libfontconfig1-dev libgl1-mesa-dev libudev-dev libpci-dev libnss3-dev libegl1-mesa-dev linux-libc-dev lsb-release ninja-build nodejs software-properties-common unzip wget zstd qtbase5-dev qtdeclarative5-dev qtquickcontrols2-5-dev qttools5-dev qtwebengine5-dev libqt5svg5-dev libqt5charts5-dev libqt5waylandclient5-dev qml-module-qtquick-controls qml-module-qtquick-controls2 qml-module-qtquick-dialogs qml-module-qtquick-extras qml-module-qtquick-layouts qml-module-qtquick-shapes qml-module-qtcharts qml-module-qtgraphicaleffects qml-module-qtwebengine qml-module-qt-labs-platform qml-module-qt-labs-settings
 
       - name: Install deps (Linux)
         if: runner.os == 'Linux'
@@ -214,7 +216,7 @@ jobs:
           vcpkgJsonGlob: 'vcpkg.json'
 
       - name: Cache vcpkg
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ${{ env.VCPKG_DEFAULT_BINARY_CACHE }}
           key: vcpkg-${{ runner.os }}-${{ matrix.type }}-${{ hashFiles('vcpkg*.json') }}
